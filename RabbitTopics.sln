@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit1", "Rabbit1\Rabbit1.csproj", "{8787E467-BD9E-4EF3-A563-CDD3DBBC0A09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit2", "Rabbit2\Rabbit2.csproj", "{54527F7E-DC8F-4E6B-95AC-011B0FB02377}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitPublisher", "RabbitPublisher\RabbitPublisher.csproj", "{EF4A64EE-EB54-470E-B89B-99C085EA37C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8787E467-BD9E-4EF3-A563-CDD3DBBC0A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8787E467-BD9E-4EF3-A563-CDD3DBBC0A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8787E467-BD9E-4EF3-A563-CDD3DBBC0A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8787E467-BD9E-4EF3-A563-CDD3DBBC0A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54527F7E-DC8F-4E6B-95AC-011B0FB02377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54527F7E-DC8F-4E6B-95AC-011B0FB02377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54527F7E-DC8F-4E6B-95AC-011B0FB02377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54527F7E-DC8F-4E6B-95AC-011B0FB02377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
