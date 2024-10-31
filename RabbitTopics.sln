@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabbit2", "Rabbit2\Rabbit2.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitPublisher", "RabbitPublisher\RabbitPublisher.csproj", "{EF4A64EE-EB54-470E-B89B-99C085EA37C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{785F5B91-7A16-4224-AD0C-B1C89D6BD485}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF4A64EE-EB54-470E-B89B-99C085EA37C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{785F5B91-7A16-4224-AD0C-B1C89D6BD485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{785F5B91-7A16-4224-AD0C-B1C89D6BD485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{785F5B91-7A16-4224-AD0C-B1C89D6BD485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{785F5B91-7A16-4224-AD0C-B1C89D6BD485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

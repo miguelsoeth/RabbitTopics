@@ -1,56 +1,62 @@
-﻿using System;
-using System.Text;
-using RabbitMQ.Client;
+﻿using MassTransit;
+using MassTransit.Configuration;
+using MassTransit.RabbitMqTransport.Configuration;
+using MassTransit.Transports.Fabric;
 
 namespace RabbitPublisher
 {
-    class Publisher
+    public class Publisher
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            // Create a connection factory to connect to RabbitMQ
-            var factory = new ConnectionFactory() 
-            { 
-                HostName = "localhost", 
-                UserName = "rabbitmq", 
-                Password = "rabbitmq" 
-            };
-
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            
+            var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                // Declare the topic exchange
-                string exchangeName = "topic_logs";
-                channel.ExchangeDeclare(exchange: exchangeName, type: ExchangeType.Topic);
-
-                while (true)
+                cfg.Host("localhost", h =>
                 {
-                    // Prompt user for routing key
-                    Console.Write("Enter routing key (or type 'exit' to quit): ");
-                    string routingKey = Console.ReadLine();
-                    if (routingKey.ToLower() == "exit")
-                    {
-                        break;
-                    }
+                    h.Username("rabbitmq");
+                    h.Password("rabbitmq");
+                });
+                
+                cfg.Publish<Message>(x =>
+                {
+                    x.ExchangeType = "topic";
+                });
+            });
 
-                    // Prompt user for message
-                    Console.Write("Enter message: ");
-                    string message = Console.ReadLine();
+            await busControl.StartAsync();
 
-                    var body = Encoding.UTF8.GetBytes(message);
-
-                    // Publish the message to the exchange with the routing key
-                    channel.BasicPublish(exchange: exchangeName,
-                        routingKey: routingKey,
-                        basicProperties: null,
-                        body: body);
-
-                    Console.WriteLine($" [x] Sent '{routingKey}':'{message}'");
-                }
+            while (true)
+            {
+                var message = new Message { Text = "DUMMY TEXT" };
+                await busControl.Publish(message,context =>
+                {
+                    context.SetRoutingKey("msg.abc");
+                });
+                
+                Console.WriteLine($" [x] Sent 'msg.abc':'DUMMY TEXT'");
+                
+                await Task.Delay(1000);
             }
-
-            Console.WriteLine(" Press [enter] to exit.");
-            Console.ReadLine();
         }
+    }
+    
+    public class CustomPipeSpecification : IPipeSpecification<PublishContext>
+    {
+        public void Apply(IPipeBuilder<PublishContext> builder)
+        {
+            // Your implementation here
+        }
+
+        public IEnumerable<ValidationResult> Validate()
+        {
+            // Your validation logic here
+            return Enumerable.Empty<ValidationResult>();
+        }
+    }
+
+    public class Message
+    {
+        public string Text { get; set; }
     }
 }
