@@ -1,7 +1,5 @@
 ﻿using MassTransit;
-using MassTransit.Configuration;
-using MassTransit.RabbitMqTransport.Configuration;
-using MassTransit.Transports.Fabric;
+using RabbitConsumer;
 
 namespace RabbitPublisher
 {
@@ -9,7 +7,6 @@ namespace RabbitPublisher
     {
         public static async Task Main(string[] args)
         {
-            
             var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
                 cfg.Host("localhost", h =>
@@ -18,45 +15,28 @@ namespace RabbitPublisher
                     h.Password("rabbitmq");
                 });
                 
-                cfg.Publish<Message>(x =>
-                {
-                    x.ExchangeType = "topic";
-                });
+                cfg.Publish<DadosPubData>(x => x.ExchangeType = "topic");
+                cfg.Publish<PortalTranspData>(x => x.ExchangeType = "topic");
             });
 
             await busControl.StartAsync();
 
             while (true)
             {
-                var message = new Message { Text = "DUMMY TEXT" };
-                await busControl.Publish(message,context =>
-                {
-                    context.SetRoutingKey("msg.abc");
-                });
-                
-                Console.WriteLine($" [x] Sent 'msg.abc':'DUMMY TEXT'");
-                
+                var message = new DadosPubData { Text = "DUMMY TEXT" };
+                await busControl.Publish(message);
+            
+                Console.WriteLine($" [x] Sent 'msg.dadospub':'DUMMY TEXT'");
+            
+                await Task.Delay(1000);
+            
+                var message2 = new PortalTranspData { Text = "DUMMY TEXT 2" };
+                await busControl.Publish(message2);
+            
+                Console.WriteLine($" [x] Sent 'msg.portaltransp':'DUMMY TEXT 2'");
+            
                 await Task.Delay(1000);
             }
         }
-    }
-    
-    public class CustomPipeSpecification : IPipeSpecification<PublishContext>
-    {
-        public void Apply(IPipeBuilder<PublishContext> builder)
-        {
-            // Your implementation here
-        }
-
-        public IEnumerable<ValidationResult> Validate()
-        {
-            // Your validation logic here
-            return Enumerable.Empty<ValidationResult>();
-        }
-    }
-
-    public class Message
-    {
-        public string Text { get; set; }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using MassTransit;
 using System;
 using System.Threading.Tasks;
-using SharedKernel;
 
 namespace RabbitConsumer
 {
-    public class MessageConsumer : IConsumer<Message>
+    public class MessageConsumer : IConsumer<PortalTranspData>
     {
-        public async Task Consume(ConsumeContext<Message> context)
+        public async Task Consume(ConsumeContext<PortalTranspData> context)
         {
             var messageText = context.Message.Text;
             Console.WriteLine($" [x] Received 'msg.abc':'{messageText}'");
-
-            // Process the message (replace with your logic)
             await Task.CompletedTask;
         }
     }
@@ -31,13 +28,8 @@ namespace RabbitConsumer
 
                 cfg.ReceiveEndpoint("portaltransp", e =>
                 {
-                    e.ConfigureConsumeTopology = false; // To handle custom routing key binding
-                    e.Bind<Message>(exchange =>
-                    {
-                        exchange.RoutingKey = "*.xyz";
-                        exchange.ExchangeType = "topic";
-                    });
-
+                    e.ConfigureConsumeTopology = false; // Avoid auto-configuring
+                    e.Bind("*.portaltransp"); // Bind to the specific exchange name
                     e.Consumer<MessageConsumer>();
                 });
             });
