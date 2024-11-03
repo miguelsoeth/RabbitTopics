@@ -2,9 +2,9 @@
 
 namespace RabbitConsumer2;
 
-[MessageUrn("dadospub")]
-[EntityName("dadospub")]
-public class DadosPubData
+[MessageUrn("portaltransp")]
+[EntityName("portaltransp")]
+public class PortalTranspData
 {
     public string Text { get; set; }
 }

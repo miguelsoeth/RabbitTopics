@@ -1,15 +1,13 @@
 ﻿using MassTransit;
-using System;
-using System.Threading.Tasks;
 
-namespace RabbitConsumer
+namespace RabbitConsumer2
 {
-    public class MessageConsumer : IConsumer<DadosPubData>
+    public class MessageConsumer : IConsumer<PortalTranspData>
     {
-        public async Task Consume(ConsumeContext<DadosPubData> context)
+        public async Task Consume(ConsumeContext<PortalTranspData> context)
         {
             var messageText = context.Message.Text;
-            Console.WriteLine($" [x] Received 'msg.abc':'{messageText}'");
+            Console.WriteLine($" [x] Received 'msg PORTALTRANSP':'{messageText}'");
             await Task.CompletedTask;
         }
     }
@@ -25,23 +23,12 @@ namespace RabbitConsumer
                     h.Username("rabbitmq");
                     h.Password("rabbitmq");
                 });
-                
-                cfg.Message<MessageConsumer>(x =>
+
+                cfg.ReceiveEndpoint("portaltransp_consumer", e =>
                 {
-                    x.SetEntityName("omg-we-got-one");
+                    e.ConfigureConsumeTopology = false;
+                    e.Consumer<MessageConsumer>();
                 });
-                //
-                // cfg.ReceiveEndpoint("dadospub", e =>
-                // {
-                //     e.ConfigureConsumeTopology = false; // To handle custom routing key binding
-                //     e.Bind<DadosPubData>(exchange =>
-                //     {
-                //         exchange.RoutingKey = "*.dadospub";
-                //         exchange.ExchangeType = "topic";
-                //     });
-                //
-                //     e.Consumer<MessageConsumer>();
-                // });
             });
 
             await busControl.StartAsync();

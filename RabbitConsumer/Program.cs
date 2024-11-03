@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace RabbitConsumer
 {
-    public class MessageConsumer : IConsumer<PortalTranspData>
+    public class MessageConsumer : IConsumer<DadosPubData>
     {
-        public async Task Consume(ConsumeContext<PortalTranspData> context)
+        public async Task Consume(ConsumeContext<DadosPubData> context)
         {
             var messageText = context.Message.Text;
-            Console.WriteLine($" [x] Received 'msg.abc':'{messageText}'");
+            Console.WriteLine($" [x] Received 'msg DADOSPUB':'{messageText}'");
             await Task.CompletedTask;
         }
     }
@@ -26,10 +26,9 @@ namespace RabbitConsumer
                     h.Password("rabbitmq");
                 });
 
-                cfg.ReceiveEndpoint("portaltransp", e =>
+                cfg.ReceiveEndpoint("dadospub_consumer", e =>
                 {
-                    e.ConfigureConsumeTopology = false; // Avoid auto-configuring
-                    e.Bind("*.portaltransp"); // Bind to the specific exchange name
+                    e.ConfigureConsumeTopology = false;
                     e.Consumer<MessageConsumer>();
                 });
             });

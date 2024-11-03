@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace RabbitConsumer2;
+namespace RabbitConsumer;
 
 [MessageUrn("dadospub")]
 [EntityName("dadospub")]
