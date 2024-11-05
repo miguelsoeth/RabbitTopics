@@ -2,9 +2,9 @@
 
 namespace RabbitConsumer2
 {
-    public class MessageConsumer : IConsumer<PortalTranspData>
+    public class MessageConsumer : IConsumer<PortalTranspMessage>
     {
-        public async Task Consume(ConsumeContext<PortalTranspData> context)
+        public async Task Consume(ConsumeContext<PortalTranspMessage> context)
         {
             var messageText = context.Message.Text;
             Console.WriteLine($" [x] Received 'msg PORTALTRANSP':'{messageText}'");
@@ -24,7 +24,7 @@ namespace RabbitConsumer2
                     h.Password("rabbitmq");
                 });
 
-                cfg.ReceiveEndpoint("portaltransp_consumer", e =>
+                cfg.ReceiveEndpoint("portaltransp", e =>
                 {
                     e.ConfigureConsumeTopology = false;
                     e.Consumer<MessageConsumer>();

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace RabbitConsumer
 {
-    public class MessageConsumer : IConsumer<DadosPubData>
+    public class MessageConsumer : IConsumer<DadosPubMessage>
     {
-        public async Task Consume(ConsumeContext<DadosPubData> context)
+        public async Task Consume(ConsumeContext<DadosPubMessage> context)
         {
             var messageText = context.Message.Text;
             Console.WriteLine($" [x] Received 'msg DADOSPUB':'{messageText}'");
@@ -25,8 +25,8 @@ namespace RabbitConsumer
                     h.Username("rabbitmq");
                     h.Password("rabbitmq");
                 });
-
-                cfg.ReceiveEndpoint("dadospub_consumer", e =>
+                
+                cfg.ReceiveEndpoint( "dadospub",e =>
                 {
                     e.ConfigureConsumeTopology = false;
                     e.Consumer<MessageConsumer>();

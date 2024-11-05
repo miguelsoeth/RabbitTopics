@@ -1,10 +1,10 @@
 ﻿using MassTransit;
 
-namespace RabbitConsumer;
+namespace RabbitManual;
 
 [MessageUrn("dadospub")]
 [EntityName("dadospub")]
-public class DadosPubData
+public class DadosPubMessage
 {
     public string Text { get; set; }
 }

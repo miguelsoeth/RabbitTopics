@@ -1,10 +1,10 @@
 ﻿using MassTransit;
 
-namespace RabbitConsumer2;
+namespace RabbitManual;
 
 [MessageUrn("portaltransp")]
 [EntityName("portaltransp")]
-public class PortalTranspData
+public class PortalTranspMessage
 {
     public string Text { get; set; }
 }
