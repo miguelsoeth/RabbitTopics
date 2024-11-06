@@ -6,9 +6,10 @@ namespace RabbitConsumer2
     {
         public async Task Consume(ConsumeContext<PortalTranspMessage> context)
         {
-            var messageText = context.Message.Text;
-            Console.WriteLine($" [x] Received 'msg PORTALTRANSP':'{messageText}'");
-            await Task.CompletedTask;
+            PortalTranspMessage portalTranspMessage = context.Message;
+            Console.WriteLine($" [x] Received 'msg PORTALTRANSP':'{portalTranspMessage.Text}'");
+            portalTranspMessage.Data = new PortalTranspData("RESPONSE PORTAL TRANSP");
+            await context.RespondAsync(portalTranspMessage);
         }
     }
 

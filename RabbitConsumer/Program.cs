@@ -8,9 +8,10 @@ namespace RabbitConsumer
     {
         public async Task Consume(ConsumeContext<DadosPubMessage> context)
         {
-            var messageText = context.Message.Text;
-            Console.WriteLine($" [x] Received 'msg DADOSPUB':'{messageText}'");
-            await Task.CompletedTask;
+            DadosPubMessage dadosPubMessage = context.Message;
+            Console.WriteLine($" [x] Received 'msg DADOSPUB':'{dadosPubMessage.Text}'");
+            dadosPubMessage.Data = new DadosPubData("RESPONSE DADOS PUB");
+            await context.RespondAsync(dadosPubMessage);
         }
     }
 

@@ -16,6 +16,9 @@ namespace RabbitManual
             });
 
             await busControl.StartAsync();
+            
+            var dadosPubClient = busControl.CreateRequestClient<DadosPubMessage>();
+            var portalTranspClient = busControl.CreateRequestClient<PortalTranspMessage>();
 
             while (true)
             {
@@ -23,16 +26,16 @@ namespace RabbitManual
                 {
                     Text = "Hello World!"
                 };
-                await busControl.Publish(message);
-                Console.WriteLine($" [x] Sent 'msg DADOSPUB'");
+                var dadosResponse = await dadosPubClient.GetResponse<DadosPubMessage>(message);
+                Console.WriteLine($" [x] Sent 'msg DADOSPUB' and received {dadosResponse.Message.Data.Result}");
                 await Task.Delay(500);
                 
                 var message2 = new PortalTranspMessage
                 {
-                    Text = "Hello World!"
+                    Text = "Hello World 2!"
                 };
-                await busControl.Publish(message2);
-                Console.WriteLine($" [x] Sent 'msg PORTALTRANSP'");
+                var portalResponse = await portalTranspClient.GetResponse<PortalTranspMessage>(message2);
+                Console.WriteLine($" [x] Sent 'msg PORTALTRANSP' and received {portalResponse.Message.Data.Result}");
                 await Task.Delay(500);
             }
         }
